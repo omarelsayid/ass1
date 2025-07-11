@@ -21,4 +21,14 @@ class FeedBackCubit extends Cubit<FeedBackStates> {
       emit(FeedBackError(message: e.toString()));
     }
   }
+
+  Future<void> getFeedbacks() async {
+    try {
+      emit(FeedBackLoading());
+      List<FeedBackModel> feedBacks = await _feedBackRepo.getFeedbacks();
+      emit(FeedBackLoaded(feedBacks: feedBacks));
+    } catch (e) {
+      emit(FeedBackError(message: e.toString()));
+    }
+  }
 }

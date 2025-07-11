@@ -1,4 +1,3 @@
-
 class FeedBackModel {
   final String fullName;
   final String email;
@@ -17,6 +16,7 @@ class FeedBackModel {
       'fullName': fullName,
       'email': email,
       'feedBackMessage': feedBackMessage,
+      'rating': rating,
     };
   }
 
