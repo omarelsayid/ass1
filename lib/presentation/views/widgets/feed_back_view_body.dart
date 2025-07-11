@@ -13,6 +13,7 @@ class FeedBackViewBody extends StatefulWidget {
   @override
   State<FeedBackViewBody> createState() => _FeedBackViewBodyState();
 }
+
 final TextEditingController nameController = TextEditingController();
 final TextEditingController emailController = TextEditingController();
 final TextEditingController messageController = TextEditingController();
@@ -76,7 +77,6 @@ class _FeedBackViewBodyState extends State<FeedBackViewBody> {
                   setState(() {
                     selectedRating = value;
                   });
-                  print('Selected rating: $value');
                 },
               ),
               BlocListener<FeedBackCubit, FeedBackStates>(
@@ -98,7 +98,7 @@ class _FeedBackViewBodyState extends State<FeedBackViewBody> {
                   }
                 },
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       FeedBackModel feedBackModel = FeedBackModel(
                         fullName: nameController.text,
@@ -106,7 +106,9 @@ class _FeedBackViewBodyState extends State<FeedBackViewBody> {
                         feedBackMessage: messageController.text,
                         rating: selectedRating!,
                       );
-                      context.read<FeedBackCubit>().sendFeedBack(feedBackModel);
+                      await context.read<FeedBackCubit>().sendFeedBack(
+                        feedBackModel,
+                      );
                     } else {
                       setState(() {
                         autovalidateMode = AutovalidateMode.always;
